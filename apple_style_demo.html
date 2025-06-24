@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍎 苹果风格视差滚动 - LABUBU升级版</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #000; color: #fff; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero { text-align: center; padding: 4rem 0; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 20px; margin-bottom: 3rem; }
+        .title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .feature-card { background: rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .demo-button { display: inline-block; background: linear-gradient(135deg, #FF6B9D, #4A90E2); color: white; padding: 1rem 2rem; border-radius: 30px; text-decoration: none; margin: 1rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1 class="title">🍎 苹果风格视差滚动</h1>
+            <p class="subtitle">为LABUBU网站打造iPhone官网级别的专业视觉体验</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>动态视差效果</h3>
+                <p>随着用户滚动，动态视频逐渐淡出并缩放，创造出类似iPhone官网的专业视觉层次感。</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>图片层次显示</h3>
+                <p>您的25张LABUBU图片按顺序逐层显示，每层都有独特的透明度和过渡效果。</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>性能优化</h3>
+                <p>使用requestAnimationFrame和节流技术，确保滚动动画的流畅性。</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>响应式设计</h3>
+                <p>完美适配桌面、平板和手机设备，在各种屏幕尺寸下都能提供一致的专业体验。</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="http://127.0.0.1:5000/" class="demo-button">🏠 查看实际效果</a>
+            <a href="http://127.0.0.1:5000/test/media" class="demo-button">🔍 媒体文件检测</a>
+        </div>
+        
+        <div style="text-align: center; padding: 3rem; background: rgba(255,107,157,0.1); border-radius: 16px; margin: 3rem 0;">
+            <h2 style="color: #FF6B9D;">🎊 升级成功！</h2>
+            <p>您的LABUBU网站现在拥有了苹果iPhone官网级别的专业视差滚动效果！</p>
+        </div>
+    </div>
+</body>
+</html> 

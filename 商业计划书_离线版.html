@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>娃改坊商业计划书 - 离线演示版</title>
+    
+    <!-- ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        /* 完整的CSS样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2D3748;
+            background: #FFFFFF;
+        }
+        
+        .business-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .business-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .business-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFE4A3;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        
+        .section {
+            padding: 4rem 2rem;
+            margin: 0;
+        }
+        
+        .section:nth-child(even) {
+            background: rgba(102, 126, 234, 0.03);
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #2D3748;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B9D, #4A90E2);
+            border-radius: 2px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .content-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 107, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+            border-color: rgba(255, 107, 157, 0.3);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #FF6B9D;
+        }
+        
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4A5568;
+        }
+        
+        .exec-summary {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1));
+            padding: 3rem;
+            margin: 3rem 0;
+            border-radius: 20px;
+            border-left: 5px solid #FF6B9D;
+            text-align: center;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #FFE4A3, #FFE4F1);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #FFC371;
+        }
+        
+        .highlight-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #E53E3E;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            margin: 2rem 0;
+            height: 400px;
+        }
+        
+        .product-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .product-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #FFE4F1, #E8F4FD);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #FF6B9D;
+        }
+        
+        .product-info {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .nav-section {
+            background: #2D3748;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B9D, #4A90E2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .business-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <header class="business-header">
+        <div class="business-container">
+            <h1 class="business-title">🎯 娃改坊商业计划书</h1>
+            <p class="business-subtitle">抓住LABUBU改装市场风口 | 轻资产创业模式 | 高利润回报</p>
+            
+            <div class="business-stats">
+                <div class="business-stat">
+                    <span class="stat-number">1289%</span>
+                    <div class="stat-label">LABUBU销售增长率</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">28.3亿</span>
+                    <div class="stat-label">2024年销售额</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">500%+</span>
+                    <div class="stat-label">改装配件利润率</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">≤1万</span>
+                    <div class="stat-label">启动资金(元)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 执行摘要 -->
+    <section class="section">
+        <div class="business-container">
+            <div class="exec-summary">
+                <h2>📋 执行摘要</h2>
+                <p><strong>娃改坊</strong>专注于LABUBU等热门潮玩IP的轻量化改装配件，销售"社交身份增强服务"，将500元的LABUBU升级为5000元的社交资本。</p>
+                <div class="highlight-box">
+                    <div class="highlight-title">💰 核心商业逻辑</div>
+                    <p>用<strong>8-50元成本</strong>的改装配件，帮助Z世代女性用户获得<strong>价值5000元</strong>的社交身份认同感，满足个性化表达和社交货币需求。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场数据可视化 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">📊 市场数据洞察</h2>
+            
+            <div class="content-grid">
+                <div class="chart-container">
+                    <div id="salesChart"></div>
+                </div>
+                <div class="chart-container">
+                    <div id="marketChart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品展示 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">💎 产品系列展示</h2>
+            <div class="product-gallery">
+                <div class="product-item">
+                    <div class="product-img">🔗</div>
+                    <div class="product-info">
+                        <h3>无损挂扣系列</h3>
+                        <p>成本8元 → 售价68元</p>
+                        <p>利润率750%</p>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">👓</div>
+                    <div class="product-info">
+                        <h3>情绪眼镜系列</h3>
+                        <p>成本2元 → 售价28元</p>
+                        <p>利润率1300%</p>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">⛓️</div>
+                    <div class="product-info">
+                        <h3>态度链条系列</h3>
+                        <p>成本5元 → 售价48元</p>
+                        <p>利润率860%</p>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-img">🎨</div>
+                    <div class="product-info">
+                        <h3>定制彩绘系列</h3>
+                        <p>成本12元 → 售价88元</p>
+                        <p>利润率633%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 财务预测 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">💰 财务预测</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">💎</span>
+                    <h3 class="card-title">盈利模型</h3>
+                    <div class="card-content">
+                        <p><strong>客单价：</strong>48元</p>
+                        <p><strong>月销量：</strong>8000件</p>
+                        <p><strong>毛利率：</strong>60%</p>
+                        <p><strong>净利率：</strong>25-35%</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📈</span>
+                    <h3 class="card-title">增长预期</h3>
+                    <div class="card-content">
+                        <p><strong>第1年：</strong>460万营收</p>
+                        <p><strong>第2年：</strong>1380万营收</p>
+                        <p><strong>第3年：</strong>2760万营收</p>
+                        <p><strong>复合增长：</strong>200%/年</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">融资计划</h3>
+                    <div class="card-content">
+                        <p><strong>天使轮：</strong>70万元</p>
+                        <p><strong>Pre-A：</strong>500万元</p>
+                        <p><strong>A轮：</strong>2000万元</p>
+                        <p><strong>退出估值：</strong>20-100亿元</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div id="revenueChart"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 投资亮点 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">🌟 投资亮点</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🔥</span>
+                    <h3 class="card-title">市场机会</h3>
+                    <div class="card-content">
+                        <p>LABUBU现象级爆火，泡泡玛特市值3100亿港元，改装配件市场空白，先发优势明显</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">💡</span>
+                    <h3 class="card-title">商业模式</h3>
+                    <div class="card-content">
+                        <p>轻资产运营，高利润率，可快速复制扩张，B2C+C2C双重收入来源</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🏆</span>
+                    <h3 class="card-title">竞争优势</h3>
+                    <div class="card-content">
+                        <p>无损改装技术壁垒，垂直专业定位，成本控制能力，品牌营销实力</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🚀</span>
+                    <h3 class="card-title">退出前景</h3>
+                    <div class="card-content">
+                        <p>IPO上市或战略并购，泡泡玛特等巨头潜在收购方，50-100倍投资回报</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系信息 -->
+    <section class="nav-section">
+        <div class="business-container">
+            <h2 style="margin-bottom: 1rem;">📞 联系我们</h2>
+            <p style="opacity: 0.8; margin-bottom: 2rem;">扫码了解更多项目详情，欢迎投资洽谈</p>
+            <div class="nav-buttons">
+                <div class="nav-button">
+                    📧 商务合作<br>
+                    <small>dollmodshop@163.com</small>
+                </div>
+                <div class="nav-button">
+                    📱 创始人微信<br>
+                    <small>DollMod2024</small>
+                </div>
+                <div class="nav-button">
+                    🏢 公司地址<br>
+                    <small>北京市朝阳区</small>
+                </div>
+                <div class="nav-button">
+                    💰 投资热线<br>
+                    <small>400-888-8888</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 销售趋势图
+            const salesChart = echarts.init(document.getElementById('salesChart'));
+            salesChart.setOption({
+                title: { text: '📈 LABUBU销售增长趋势', left: 'center' },
+                xAxis: { 
+                    type: 'category', 
+                    data: ['2022年', '2023年', '2024年', '2025年预测'] 
+                },
+                yAxis: { type: 'value', name: '销售额(亿元)' },
+                series: [{
+                    data: [0.8, 2.2, 28.3, 50],
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: { color: '#FF6B9D' },
+                    areaStyle: { 
+                        color: {
+                            type: 'linear',
+                            x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: 'rgba(255, 107, 157, 0.3)' },
+                                { offset: 1, color: 'rgba(255, 107, 157, 0.05)' }
+                            ]
+                        }
+                    }
+                }]
+            });
+
+            // 市场分布图
+            const marketChart = echarts.init(document.getElementById('marketChart'));
+            marketChart.setOption({
+                title: { text: '🌐 全球市场分布', left: 'center' },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    data: [
+                        { value: 45, name: '中国大陆' },
+                        { value: 25, name: '港澳台' },
+                        { value: 15, name: '东南亚' },
+                        { value: 10, name: '欧美' },
+                        { value: 5, name: '其他' }
+                    ]
+                }]
+            });
+
+            // 收入预测图
+            const revenueChart = echarts.init(document.getElementById('revenueChart'));
+            revenueChart.setOption({
+                title: { text: '💰 3年收入预测', left: 'center' },
+                xAxis: { 
+                    type: 'category', 
+                    data: ['第1年', '第2年', '第3年'] 
+                },
+                yAxis: { type: 'value', name: '营收(万元)' },
+                series: [
+                    {
+                        name: '营业收入',
+                        type: 'bar',
+                        data: [460, 1380, 2760],
+                        itemStyle: { color: '#4A90E2' }
+                    },
+                    {
+                        name: '净利润',
+                        type: 'bar',
+                        data: [96, 414, 966],
+                        itemStyle: { color: '#FF6B9D' }
+                    }
+                ]
+            });
+
+            // 窗口大小变化时重新调整图表
+            window.addEventListener('resize', function() {
+                salesChart.resize();
+                marketChart.resize();
+                revenueChart.resize();
+            });
+        });
+    </script>
+</body>
+</html> 

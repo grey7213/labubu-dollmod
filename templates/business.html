@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>娃改坊商业计划书 | DollModShop Business Plan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .business-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .business-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .business-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .business-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .business-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFE4A3;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+        
+        .section {
+            padding: 4rem 2rem;
+            margin: 0;
+        }
+        
+        .section:nth-child(even) {
+            background: rgba(102, 126, 234, 0.03);
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #2D3748;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B9D, #4A90E2);
+            border-radius: 2px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .content-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 107, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+            border-color: rgba(255, 107, 157, 0.3);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #FF6B9D;
+        }
+        
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #4A5568;
+        }
+        
+        .exec-summary {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1));
+            padding: 3rem;
+            margin: 3rem 0;
+            border-radius: 20px;
+            border-left: 5px solid #FF6B9D;
+            text-align: center;
+        }
+        
+        .exec-summary h2 {
+            color: #FF6B9D;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .exec-summary p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #2D3748;
+            margin-bottom: 1.5rem;
+        }
+        
+        .financial-table {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+        
+        .financial-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        
+        .financial-table th,
+        .financial-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        
+        .financial-table th {
+            background: #FF6B9D;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .financial-table tr:hover {
+            background: rgba(255, 107, 157, 0.05);
+        }
+        
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .risk-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #FFC371;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+        
+        .risk-title {
+            font-weight: 600;
+            color: #E53E3E;
+            margin-bottom: 0.5rem;
+        }
+        
+        .risk-solution {
+            color: #2D3748;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #FF6B9D, #4A90E2);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            width: 45%;
+            position: relative;
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: #FF6B9D;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-section {
+            background: #2D3748;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B9D, #4A90E2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #FFE4A3, #FFE4F1);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid #FFC371;
+        }
+        
+        .highlight-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #E53E3E;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .business-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+                margin-left: 40px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面 -->
+    <header class="business-header">
+        <div class="business-container">
+            <h1 class="business-title">🎯 娃改坊商业计划书</h1>
+            <p class="business-subtitle">DollModShop Business Plan</p>
+            <p style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 0;">抓住LABUBU改装市场风口 | 轻资产创业模式 | 高利润回报</p>
+            
+            <div class="business-stats">
+                <div class="business-stat">
+                    <span class="stat-number">1289%</span>
+                    <div class="stat-label">LABUBU销售增长率</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">28.3亿</span>
+                    <div class="stat-label">2024年销售额</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">500%+</span>
+                    <div class="stat-label">改装配件利润率</div>
+                </div>
+                <div class="business-stat">
+                    <span class="stat-number">≤1万</span>
+                    <div class="stat-label">启动资金(元)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 执行摘要 -->
+    <section class="section">
+        <div class="business-container">
+            <div class="exec-summary">
+                <h2>📋 执行摘要 Executive Summary</h2>
+                <p><strong>娃改坊</strong>专注于LABUBU等热门潮玩IP的轻量化改装配件，销售"社交身份增强服务"，将500元的LABUBU升级为5000元的社交资本。</p>
+                <p>基于泡泡玛特3100亿港元市值和LABUBU 1289%增长数据，我们发现了一个<strong>高利润、低门槛</strong>的蓝海市场：潮玩改装配件。</p>
+                <div class="highlight-box">
+                    <div class="highlight-title">💰 核心商业逻辑</div>
+                    <p>用<strong>8-50元成本</strong>的改装配件，帮助Z世代女性用户获得<strong>价值5000元</strong>的社交身份认同感，满足个性化表达和社交货币需求。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 愿景使命 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">🎯 愿景使命 Vision & Mission</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🌟</span>
+                    <h3 class="card-title">企业愿景</h3>
+                    <div class="card-content">
+                        成为全球领先的潮玩改装配件品牌，让每个LABUBU都成为独一无二的社交表达工具，赋能年轻人的个性化生活方式。
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🎨</span>
+                    <h3 class="card-title">企业使命</h3>
+                    <div class="card-content">
+                        通过创新设计和精工制作，为潮玩爱好者提供高品质、低成本的改装解决方案，让社交表达更加丰富多彩。
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">💎</span>
+                    <h3 class="card-title">核心价值观</h3>
+                    <div class="card-content">
+                        <strong>创新驱动</strong> | <strong>品质优先</strong> | <strong>用户至上</strong> | <strong>社交赋能</strong> | <strong>可持续发展</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品服务介绍 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">💎 产品服务介绍 Products & Services</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🔗</span>
+                    <h3 class="card-title">无损挂扣系列</h3>
+                    <div class="card-content">
+                        <p><strong>核心创新：</strong>钛合金材质，无需打孔，完美兼容LABUBU原装设计</p>
+                        <p><strong>使用场景：</strong>包包挂饰、车钥匙扣、手机链</p>
+                        <p><strong>成本结构：</strong>8元成本，68元售价，利润率750%</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">👓</span>
+                    <h3 class="card-title">情绪眼镜系列</h3>
+                    <div class="card-content">
+                        <p><strong>核心创新：</strong>多色亚克力迷你墨镜，表达不同情绪状态</p>
+                        <p><strong>使用场景：</strong>社交媒体拍照、个性化展示</p>
+                        <p><strong>成本结构：</strong>2元成本，28元售价，利润率1300%</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">⛓️</span>
+                    <h3 class="card-title">态度链条系列</h3>
+                    <div class="card-content">
+                        <p><strong>核心创新：</strong>微缩版金属链、珍珠链，提升"潮酷"指数</p>
+                        <p><strong>使用场景：</strong>街拍造型、潮流搭配</p>
+                        <p><strong>成本结构：</strong>5元成本，48元售价，利润率860%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市场分析 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">📊 市场分析 Market Analysis</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">目标用户痛点</h3>
+                    <div class="card-content">
+                        <p><strong>Z世代女性用户</strong>（18-35岁）面临的核心痛点：</p>
+                        <ul>
+                            <li>LABUBU同质化严重，缺乏个性表达</li>
+                            <li>社交媒体需要差异化内容</li>
+                            <li>改装需求强烈但缺乏专业方案</li>
+                            <li>愿意为"社交货币"付费</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🏷️</span>
+                    <h3 class="card-title">细分市场定位</h3>
+                    <div class="card-content">
+                        <p><strong>目标市场：</strong>潮玩改装配件市场</p>
+                        <p><strong>细分定位：</strong>LABUBU轻量化改装专家</p>
+                        <p><strong>差异化：</strong>无损改装 + 社交赋能 + 高性价比</p>
+                        <p><strong>竞争优势：</strong>专业设计 + 成本控制 + 品牌营销</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📈</span>
+                    <h3 class="card-title">销售预期</h3>
+                    <div class="card-content">
+                        <p><strong>市场规模：</strong>LABUBU全球销量1亿只，改装渗透率预计10%</p>
+                        <p><strong>目标客户：</strong>1000万潜在用户</p>
+                        <p><strong>年度目标：</strong>首年销售10万件，营收500万元</p>
+                        <p><strong>增长预期：</strong>年复合增长率200%</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="financial-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>市场数据</th>
+                            <th>2023年</th>
+                            <th>2024年</th>
+                            <th>2025年预测</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LABUBU销售额</td>
+                            <td>2.2亿元</td>
+                            <td>28.3亿元</td>
+                            <td>50亿元</td>
+                        </tr>
+                        <tr>
+                            <td>改装市场规模</td>
+                            <td>2200万元</td>
+                            <td>2.83亿元</td>
+                            <td>5亿元</td>
+                        </tr>
+                        <tr>
+                            <td>娃改坊目标份额</td>
+                            <td>-</td>
+                            <td>1.8%</td>
+                            <td>3%</td>
+                        </tr>
+                        <tr>
+                            <td>预期营收</td>
+                            <td>-</td>
+                            <td>500万元</td>
+                            <td>1500万元</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 竞争分析 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">🏆 竞争分析 Competitive Analysis</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">⚔️</span>
+                    <h3 class="card-title">波特五力分析</h3>
+                    <div class="card-content">
+                        <p><strong>竞争者威胁：</strong>中等（义乌改娃师、小作坊）</p>
+                        <p><strong>新进入者：</strong>低（技术门槛低但品牌建设难）</p>
+                        <p><strong>替代品威胁：</strong>低（DIY改装质量不稳定）</p>
+                        <p><strong>供应商议价：</strong>低（原材料供应充足）</p>
+                        <p><strong>客户议价：</strong>中等（价格敏感但品质要求高）</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">核心竞争优势</h3>
+                    <div class="card-content">
+                        <p><strong>1. 专业化定位：</strong>专注LABUBU改装，垂直领域专家</p>
+                        <p><strong>2. 无损技术：</strong>创新设计，保护原品价值</p>
+                        <p><strong>3. 成本优势：</strong>规模化生产，供应链优化</p>
+                        <p><strong>4. 品牌营销：</strong>社交媒体矩阵，KOL合作</p>
+                        <p><strong>5. 快速响应：</strong>紧跟潮流，快速迭代</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🛡️</span>
+                    <h3 class="card-title">护城河建设</h3>
+                    <div class="card-content">
+                        <p><strong>技术护城河：</strong>无损改装专利技术</p>
+                        <p><strong>品牌护城河：</strong>娃改坊专业品牌认知</p>
+                        <p><strong>供应链护城河：</strong>优质供应商长期合作</p>
+                        <p><strong>用户护城河：</strong>社群运营，用户粘性</p>
+                        <p><strong>数据护城河：</strong>用户偏好数据，精准营销</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目运营 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">⚙️ 项目运营 Operations</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🔬</span>
+                    <h3 class="card-title">研发阶段</h3>
+                    <div class="card-content">
+                        <p><strong>产品设计：</strong>3D建模、材料测试、用户体验优化</p>
+                        <p><strong>原型制作：</strong>快速原型验证，迭代优化</p>
+                        <p><strong>批量生产：</strong>供应链对接，质量控制体系</p>
+                        <p><strong>周期：</strong>2-3个月完成首批产品开发</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🏭</span>
+                    <h3 class="card-title">生产管理</h3>
+                    <div class="card-content">
+                        <p><strong>生产模式：</strong>OEM代工 + 品质监控</p>
+                        <p><strong>供应商：</strong>东莞精密制造商，品质认证</p>
+                        <p><strong>质控标准：</strong>99.5%合格率，7天无理由退换</p>
+                        <p><strong>产能规划：</strong>月产能5万件，可扩展至20万件</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📢</span>
+                    <h3 class="card-title">营销策略</h3>
+                    <div class="card-content">
+                        <p><strong>线上渠道：</strong>淘宝、天猫、小红书、抖音直播</p>
+                        <p><strong>内容营销：</strong>改装教程、搭配指南、用户UGC</p>
+                        <p><strong>KOL合作：</strong>潮玩博主、改装达人、明星代言</p>
+                        <p><strong>社群运营：</strong>微信群、QQ群、线下活动</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">👥</span>
+                    <h3 class="card-title">团队架构</h3>
+                    <div class="card-content">
+                        <p><strong>创始团队：</strong>3人（产品、运营、技术）</p>
+                        <p><strong>核心岗位：</strong>设计师2人、供应链1人、营销2人</p>
+                        <p><strong>兼职顾问：</strong>行业专家、法律顾问、财务顾问</p>
+                        <p><strong>扩张计划：</strong>首年团队规模15人</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 财务分析 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">💰 财务分析 Financial Analysis</h2>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">💎</span>
+                    <h3 class="card-title">资本构成</h3>
+                    <div class="card-content">
+                        <p><strong>启动资金：</strong>100万元</p>
+                        <p><strong>自筹资金：</strong>30万元（30%）</p>
+                        <p><strong>天使轮融资：</strong>70万元（70%）</p>
+                        <p><strong>资金用途：</strong>产品开发40%、营销推广35%、运营资金25%</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">收入模型</h3>
+                    <div class="card-content">
+                        <p><strong>客单价：</strong>48元（混合产品平均）</p>
+                        <p><strong>月销量：</strong>8000件（首年平均）</p>
+                        <p><strong>月营收：</strong>38.4万元</p>
+                        <p><strong>年营收：</strong>460万元</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">⚖️</span>
+                    <h3 class="card-title">盈亏平衡</h3>
+                    <div class="card-content">
+                        <p><strong>固定成本：</strong>15万元/月（人员、租金、运营）</p>
+                        <p><strong>变动成本：</strong>产品成本30%，物流包装10%</p>
+                        <p><strong>盈亏平衡点：</strong>2500件/月</p>
+                        <p><strong>达成时间：</strong>运营第3个月</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="financial-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>财务指标</th>
+                            <th>第1年</th>
+                            <th>第2年</th>
+                            <th>第3年</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>营业收入</td>
+                            <td>460万元</td>
+                            <td>1380万元</td>
+                            <td>2760万元</td>
+                        </tr>
+                        <tr>
+                            <td>毛利润</td>
+                            <td>276万元</td>
+                            <td>828万元</td>
+                            <td>1656万元</td>
+                        </tr>
+                        <tr>
+                            <td>净利润</td>
+                            <td>96万元</td>
+                            <td>414万元</td>
+                            <td>966万元</td>
+                        </tr>
+                        <tr>
+                            <td>净利率</td>
+                            <td>20.9%</td>
+                            <td>30%</td>
+                            <td>35%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 风险分析 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">⚠️ 风险分析 Risk Analysis</h2>
+            <div class="risk-grid">
+                <div class="risk-item">
+                    <div class="risk-title">市场风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>LABUBU热度下降<br>
+                        <strong>应对：</strong>多IP布局，扩展至其他潮玩品牌
+                    </div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-title">竞争风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>大厂入局竞争<br>
+                        <strong>应对：</strong>专业化差异定位，技术壁垒建设
+                    </div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-title">供应链风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>供应商质量不稳定<br>
+                        <strong>应对：</strong>多供应商备份，质量控制体系
+                    </div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-title">法律风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>知识产权纠纷<br>
+                        <strong>应对：</strong>原创设计，专利申请，法律合规
+                    </div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-title">团队风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>核心人员流失<br>
+                        <strong>应对：</strong>股权激励，企业文化建设
+                    </div>
+                </div>
+                <div class="risk-item">
+                    <div class="risk-title">资金风险</div>
+                    <div class="risk-solution">
+                        <strong>风险：</strong>现金流不足<br>
+                        <strong>应对：</strong>分阶段融资，严格成本控制
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 退出机制 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">🚪 退出机制 Exit Strategy</h2>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">IPO上市</h3>
+                    <div class="card-content">
+                        <p><strong>时间节点：</strong>第5-7年</p>
+                        <p><strong>条件：</strong>年营收超过5亿元，净利润率25%+</p>
+                        <p><strong>预期估值：</strong>50-100亿元</p>
+                        <p><strong>投资回报：</strong>50-100倍</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🤝</span>
+                    <h3 class="card-title">战略并购</h3>
+                    <div class="card-content">
+                        <p><strong>潜在买家：</strong>泡泡玛特、52TOYS等潮玩巨头</p>
+                        <p><strong>时间节点：</strong>第3-5年</p>
+                        <p><strong>并购价值：</strong>20-50亿元</p>
+                        <p><strong>投资回报：</strong>20-50倍</p>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">💰</span>
+                    <h3 class="card-title">管理层收购</h3>
+                    <div class="card-content">
+                        <p><strong>适用情况：</strong>业务稳定，现金流充沛</p>
+                        <p><strong>时间节点：</strong>第4-6年</p>
+                        <p><strong>收购价格：</strong>按PE倍数估值</p>
+                        <p><strong>投资回报：</strong>10-20倍</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 时间表与里程碑 -->
+    <section class="section">
+        <div class="business-container">
+            <h2 class="section-title">📅 时间表与里程碑 Timeline & Milestones</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年Q1</div>
+                        <strong>项目启动阶段</strong>
+                        <p>团队组建、产品设计、天使轮融资（70万元）</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年Q2</div>
+                        <strong>产品开发阶段</strong>
+                        <p>原型制作、供应链建设、品牌注册</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年Q3</div>
+                        <strong>市场测试阶段</strong>
+                        <p>小批量生产、用户测试、渠道拓展</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024年Q4</div>
+                        <strong>正式运营阶段</strong>
+                        <p>规模化生产、营销推广、达成盈亏平衡</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025年</div>
+                        <strong>快速扩张阶段</strong>
+                        <p>Pre-A轮融资（500万元）、团队扩张、多渠道布局</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2026年</div>
+                        <strong>规模化发展</strong>
+                        <p>A轮融资（2000万元）、多IP布局、供应链优化</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 导航区域 -->
+    <section class="nav-section">
+        <div class="business-container">
+            <h2 style="margin-bottom: 1rem;">🔗 相关资源链接</h2>
+            <p style="opacity: 0.8; margin-bottom: 2rem;">点击下方链接查看支撑数据和项目演示</p>
+            <div class="nav-buttons">
+                <a href="{{ url_for('index') }}" class="nav-button">
+                    📊 数据洞察首页<br>
+                    <small>查看市场数据分析</small>
+                </a>
+                <a href="{{ url_for('index') }}#product-gallery" class="nav-button">
+                    🎨 产品展示画廊<br>
+                    <small>LABUBU产品宇宙</small>
+                </a>
+                <a href="{{ url_for('ppt_version') }}" class="nav-button">
+                    📱 PPT专用版<br>
+                    <small>适合演示嵌入</small>
+                </a>
+                <a href="{{ url_for('single_chart', chart_name='sales') }}" class="nav-button">
+                    📈 销售趋势图表<br>
+                    <small>单独图表展示</small>
+                </a>
+                <a href="{{ url_for('test_media') }}" class="nav-button">
+                    🔍 媒体文件检测<br>
+                    <small>技术实现展示</small>
+                </a>
+                <a href="/apple_style_demo.html" class="nav-button">
+                    🍎 技术演示页面<br>
+                    <small>苹果风格展示</small>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 

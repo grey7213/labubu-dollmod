@@ -1,0 +1,176 @@
+{
+  "currentState": "role_activated_with_memory",
+  "stateHistory": [
+    {
+      "from": "initial",
+      "command": "recall",
+      "timestamp": "2025-06-23T08:18:10.688Z",
+      "args": []
+    },
+    {
+      "from": "recall-waiting",
+      "command": "action",
+      "timestamp": "2025-06-23T08:21:08.405Z",
+      "args": [
+        "ui-designer"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "action",
+      "timestamp": "2025-06-23T08:21:12.122Z",
+      "args": [
+        "web-developer"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-06-23T08:25:03.499Z",
+      "args": [
+        {
+          "workingDirectory": "/e:/School_order_folder/PyEcharts------Jupyter/23107310229孙天一/labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "init",
+      "timestamp": "2025-06-23T08:29:48.134Z",
+      "args": [
+        {
+          "workingDirectory": "/e%3A/School_order_folder/PyEcharts------Jupyter/23107310229%E5%AD%99%E5%A4%A9%E4%B8%80/labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "init",
+      "timestamp": "2025-06-23T08:30:11.842Z",
+      "args": [
+        {
+          "workingDirectory": "E:\\School_order_folder\\PyEcharts------Jupyter\\23107310229孙天一\\labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "welcome",
+      "timestamp": "2025-06-23T08:30:15.622Z",
+      "args": []
+    },
+    {
+      "from": "role_discovery",
+      "command": "init",
+      "timestamp": "2025-06-23T14:52:28.456Z",
+      "args": [
+        {
+          "workingDirectory": "/e%3A/School_order_folder/PyEcharts------Jupyter/23107310229%E5%AD%99%E5%A4%A9%E4%B8%80/labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "init",
+      "timestamp": "2025-06-23T14:52:37.502Z",
+      "args": [
+        {
+          "workingDirectory": "E:\\School_order_folder\\PyEcharts------Jupyter\\23107310229孙天一\\labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "action",
+      "timestamp": "2025-06-23T14:52:55.113Z",
+      "args": [
+        "nuwa"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-06-23T15:07:50.360Z",
+      "args": [
+        {
+          "workingDirectory": "E:\\School_order_folder\\PyEcharts------Jupyter\\23107310229孙天一\\labubu_site"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "welcome",
+      "timestamp": "2025-06-23T15:07:55.659Z",
+      "args": []
+    },
+    {
+      "from": "role_discovery",
+      "command": "action",
+      "timestamp": "2025-06-23T15:11:30.204Z",
+      "args": [
+        "ui-ppt-designer"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-06-24T03:23:04.144Z",
+      "args": [
+        {
+          "workingDirectory": "/e%3A/School_order_folder/Visualization_report"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "init",
+      "timestamp": "2025-06-24T03:23:07.848Z",
+      "args": [
+        {
+          "workingDirectory": "E:\\School_order_folder\\Visualization_report"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "welcome",
+      "timestamp": "2025-06-24T03:23:11.160Z",
+      "args": []
+    },
+    {
+      "from": "role_discovery",
+      "command": "action",
+      "timestamp": "2025-06-24T03:23:14.835Z",
+      "args": [
+        "nuwa"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "action",
+      "timestamp": "2025-06-24T03:44:26.121Z",
+      "args": [
+        "data-visualization-expert"
+      ]
+    },
+    {
+      "from": "role_activated_with_memory",
+      "command": "init",
+      "timestamp": "2025-06-24T03:44:29.597Z",
+      "args": [
+        {
+          "workingDirectory": "E:\\School_order_folder\\Visualization_report"
+        }
+      ]
+    },
+    {
+      "from": "initialized",
+      "command": "action",
+      "timestamp": "2025-06-24T03:44:32.849Z",
+      "args": [
+        "data-visualization-expert"
+      ]
+    }
+  ],
+  "lastUpdated": "2025-06-24T03:44:32.864Z"
+}

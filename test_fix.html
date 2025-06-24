@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片修复测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #FFE4F1 0%, #E8F4FD 100%);
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .test-image {
+            max-width: 300px;
+            max-height: 200px;
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        .success { border-color: green; }
+        .error { border-color: red; }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🔧 图片显示修复测试页面</h1>
+    
+    <div class="test-section">
+        <h2>✅ 修复效果验证</h2>
+        <p>如果你能看到下面的图片并且它们不会消失，说明修复成功！</p>
+        
+        <h3>📷 本地图片测试</h3>
+        <div>
+            <img src="/static/images/labubu2.jpg" alt="Labubu 2" class="test-image" 
+                 style="opacity: 1 !important; visibility: visible !important; display: block !important;"
+                 onload="this.classList.add('success'); this.nextElementSibling.textContent='✅ 加载成功'; this.nextElementSibling.className='status success';"
+                 onerror="this.classList.add('error'); this.nextElementSibling.textContent='❌ 加载失败'; this.nextElementSibling.className='status error';">
+            <span class="status">加载中...</span>
+        </div>
+        
+        <div>
+            <img src="/static/images/labubu4.jpg" alt="Labubu 4" class="test-image"
+                 style="opacity: 1 !important; visibility: visible !important; display: block !important;"
+                 onload="this.classList.add('success'); this.nextElementSibling.textContent='✅ 加载成功'; this.nextElementSibling.className='status success';"
+                 onerror="this.classList.add('error'); this.nextElementSibling.textContent='❌ 加载失败'; this.nextElementSibling.className='status error';">
+            <span class="status">加载中...</span>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔍 实时状态监控</h2>
+        <p>页面会实时监控图片状态，如果发现图片被隐藏会自动修复。</p>
+        <div id="monitoring-log" style="background: #f8f9fa; padding: 10px; border-radius: 4px; max-height: 200px; overflow-y: auto;">
+            <p><strong>📊 监控日志：</strong></p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🚀 修复功能说明</h2>
+        <ul>
+            <li>✅ 添加了强制的CSS规则 (<code>!important</code>) 确保图片始终可见</li>
+            <li>✅ 修复了JavaScript懒加载导致的透明度问题</li>
+            <li>✅ 添加了实时监控和自动修复机制</li>
+            <li>✅ 改进了图片加载错误处理</li>
+            <li>✅ 增强了图片路径和文件存在性验证</li>
+        </ul>
+    </div>
+    
+    <p style="text-align: center; margin-top: 40px;">
+        <a href="/" style="background: #FF6B9D; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+            🏠 返回主页面测试
+        </a>
+    </p>
+    
+    <script>
+        const log = document.getElementById('monitoring-log');
+        
+        function addLog(message) {
+            const time = new Date().toLocaleTimeString();
+            const p = document.createElement('p');
+            p.innerHTML = `<span style="color: #666;">[${time}]</span> ${message}`;
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // 监控函数
+        function monitorImages() {
+            const images = document.querySelectorAll('img');
+            let visibleCount = 0;
+            let hiddenCount = 0;
+            
+            images.forEach((img, index) => {
+                const computedStyle = window.getComputedStyle(img);
+                const isVisible = computedStyle.opacity !== '0' && 
+                                computedStyle.visibility !== 'hidden' && 
+                                computedStyle.display !== 'none';
+                
+                if (isVisible) {
+                    visibleCount++;
+                } else {
+                    hiddenCount++;
+                    // 自动修复隐藏的图片
+                    img.style.opacity = '1';
+                    img.style.visibility = 'visible';
+                    img.style.display = 'block';
+                    addLog(`🔧 修复隐藏图片: ${img.src}`);
+                }
+            });
+            
+            if (hiddenCount === 0) {
+                addLog(`✅ 所有图片正常显示 (${visibleCount}张)`);
+            }
+        }
+        
+        // 页面加载完成后开始监控
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🎨 开始监控图片显示状态...');
+            
+            // 立即检查一次
+            setTimeout(monitorImages, 1000);
+            
+            // 每3秒检查一次
+            setInterval(monitorImages, 3000);
+            
+            // 监听图片加载事件
+            document.querySelectorAll('img').forEach((img, index) => {
+                img.addEventListener('load', () => {
+                    addLog(`📷 图片 ${index + 1} 加载完成`);
+                });
+                
+                img.addEventListener('error', () => {
+                    addLog(`❌ 图片 ${index + 1} 加载失败`);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

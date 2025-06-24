@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泡泡玛特 Labubu 数据洞察 - PPT版</title>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        /* PPT专用样式优化 */
+        body {
+            zoom: 0.9; /* 适应PPT显示 */
+            overflow-x: hidden;
+        }
+        
+        header {
+            padding: 20px;
+            background: linear-gradient(135deg, #FF6B9D 0%, #4A90E2 100%);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            color: white;
+            background: none;
+            -webkit-text-fill-color: white;
+        }
+        
+        .hero {
+            height: 300px;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+        
+        .stat-card {
+            padding: 16px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+        
+        .gallery {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        
+        .container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .chart {
+            padding: 20px;
+        }
+        
+        iframe {
+            height: 350px;
+        }
+        
+        .gallery-container {
+            padding: 20px;
+        }
+        
+        .global-insight {
+            margin-top: 24px;
+            padding: 20px;
+            background: rgba(255, 107, 157, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        footer {
+            padding: 16px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 简化版Header -->
+    <header>
+        <h1>🎭 泡泡玛特 Labubu 数据洞察</h1>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        {% if hero_image %}
+            <img src="{{ url_for('static', filename=hero_image) }}" 
+                 alt="Labubu - 泡泡玛特明星IP" 
+                 loading="eager">
+        {% endif %}
+        <div class="hero-text">Labubu Magic ✨</div>
+    </section>
+
+    <!-- 核心数据统计 -->
+    <section class="gallery-container">
+        <h2>📊 核心数据</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" data-target="3100">0</span>
+                <div class="stat-label">市值 (亿港元)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="440">0</span>
+                <div class="stat-label">海外增长率 (%)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="30">0</span>
+                <div class="stat-label">拉布布销售额 (亿元)</div>
+            </div>
+        </div>
+
+        <!-- 产品展示 -->
+        <h2>🎨 产品系列</h2>
+        <div class="gallery">
+            {% for img in gallery_images %}
+            <div class="gallery-item">
+                <img src="{{ url_for('static', filename=img) }}" 
+                     alt="Labubu Collection" 
+                     loading="lazy"
+                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558618066-fcd25c85cd64?auto=format&fit=crop&w=400&q=80';">
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- 关键洞察 -->
+        <div class="global-insight">
+            <h3 style="color: var(--primary); margin-bottom: 12px; font-size: 1.1rem;">🌍 关键洞察</h3>
+            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0; font-size: 0.9rem;">
+                <strong>全球现象：</strong>泰国Lisa带货爆火，蕾哈娜等国际明星自发代言，2024年销售额增长7倍，成为Z世代文化符号。
+            </p>
+        </div>
+    </section>
+
+    <!-- 数据可视化 -->
+    <section class="container">
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                📈 销售趋势
+            </h3>
+            {{ sales_trend|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                🌐 市场分布
+            </h3>
+            {{ channel_distribution|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                💰 价格分析
+            </h3>
+            {{ price_bar|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                🔥 热度词云
+            </h3>
+            {{ wordcloud|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                👥 用户画像
+            </h3>
+            {{ user_profile|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 16px; color: var(--text-primary); font-size: 1rem; font-weight: 600;">
+                📊 转化漏斗
+            </h3>
+            {{ revenue_funnel|safe }}
+        </article>
+    </section>
+
+    <!-- 简化版Footer -->
+    <footer>
+        <p>🎯 泡泡玛特 (09992.HK) | 数据来源：官方财报 | © 2024 POP MART Analytics</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // PPT优化的动画
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 1500; // 加快动画速度
+                const start = performance.now();
+                
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    const current = Math.floor(target * easeOutQuart);
+                    
+                    counter.textContent = current.toLocaleString();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                }
+                
+                requestAnimationFrame(updateCounter);
+            });
+        }
+        
+        // 页面加载完成后立即执行
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(animateCounters, 300);
+            
+            // 页面淡入效果
+            document.body.style.opacity = '0';
+            requestAnimationFrame(() => {
+                document.body.style.transition = 'opacity 0.5s ease-in';
+                document.body.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 LABUBU动态视频展示 - 娃改坊升级版</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FFE4F1 0%, #E8F4FD 100%);
+            margin: 0;
+            padding: 20px;
+            color: #2D3748;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #FF6B9D, #4A90E2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 2px solid rgba(255, 107, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 107, 157, 0.3);
+        }
+        
+        .feature-card h3 {
+            color: #FF6B9D;
+            margin-bottom: 15px;
+        }
+        
+        .demo-video {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #FFE4F1, #E8F4FD);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            border: 2px dashed #FF6B9D;
+            color: #FF6B9D;
+            font-weight: bold;
+        }
+        
+        .upgrade-highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1));
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #FF6B9D;
+        }
+        
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spec-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        .spec-item .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FF6B9D;
+            display: block;
+        }
+        
+        .nav-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .nav-buttons a {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B9D, #4A90E2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-buttons a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 LABUBU动态视频展示 - 娃改坊升级版</h1>
+        
+        <div class="upgrade-highlight">
+            <h2>🚀 全新动态视频功能</h2>
+            <p>我们已经成功将您的图片文件夹中的MP4动态壁纸集成到网站中，让LABUBU产品展示更加生动、专业和吸引人！</p>
+        </div>
+        
+        <div class="tech-specs">
+            <div class="spec-item">
+                <span class="number">📊</span>
+                <strong>智能媒体检测</strong><br>
+                自动识别图片和视频文件
+            </div>
+            <div class="spec-item">
+                <span class="number">🎬</span>
+                <strong>Hero动态视频</strong><br>
+                优先使用动态视频作为主视觉
+            </div>
+            <div class="spec-item">
+                <span class="number">🔄</span>
+                <strong>混合画廊</strong><br>
+                图片+视频混合展示
+            </div>
+            <div class="spec-item">
+                <span class="number">📱</span>
+                <strong>响应式设计</strong><br>
+                自适应各种屏幕尺寸
+            </div>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🎯 Hero动态视频</h3>
+                <div class="demo-video">
+                    🎬 Labubu拉布布动态壁纸合集_1<br>
+                    (自动播放，循环，静音)
+                </div>
+                <p>网站顶部现在会优先展示动态MP4视频，带有播放/暂停控制按钮，提供更强的视觉冲击力。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🖼️ 混合媒体画廊</h3>
+                <div class="demo-video">
+                    📷🎬📷🎬📷🎬<br>
+                    (图片+视频交替展示)
+                </div>
+                <p>产品画廊现在支持图片和视频混合展示，每隔几张图片会插入一个动态视频，增强用户体验。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>⚡ 智能控制</h3>
+                <div class="demo-video">
+                    🎮 点击播放/暂停<br>
+                    (智能视频控制)
+                </div>
+                <p>支持点击播放/暂停视频，自动暂停其他视频，优化性能和用户体验。</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎨 视觉效果升级</h3>
+                <div class="demo-video">
+                    ✨ 动态边框样式<br>
+                    (媒体类型区分)
+                </div>
+                <p>视频和图片使用不同的边框颜色和hover效果，视频项目带有播放标识和类型指示器。</p>
+            </div>
+        </div>
+        
+        <div class="upgrade-highlight">
+            <h2>📈 技术升级亮点</h2>
+            <ul>
+                <li><strong>后端升级：</strong>新增 <code>get_local_media()</code> 函数，智能识别和分类媒体文件</li>
+                <li><strong>前端增强：</strong>支持HTML5 video标签，自动播放，响应式设计</li>
+                <li><strong>样式优化：</strong>新增150+行CSS样式，专门针对视频展示优化</li>
+                <li><strong>交互升级：</strong>JavaScript视频控制，懒加载，性能优化</li>
+                <li><strong>媒体策略：</strong>Hero优先使用动态视频，画廊混合展示，提升视觉吸引力</li>
+            </ul>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="http://127.0.0.1:5000/">🏠 查看升级后的主页</a>
+            <a href="http://127.0.0.1:5000/test/media">🔍 媒体文件检测页面</a>
+            <a href="http://127.0.0.1:5000/test/fix">🛠️ 测试和修复页面</a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #666; font-size: 0.9rem;">
+            <p>🎊 恭喜！您的LABUBU网站现在拥有了专业级的动态视频展示功能</p>
+            <p>让静态的产品展示变为动态的视觉盛宴，大幅提升用户体验和专业度！</p>
+        </div>
+    </div>
+    
+    <script>
+        console.log('🎬 LABUBU动态视频展示页面已加载');
+        console.log('✅ 网站升级功能:');
+        console.log('  - Hero动态视频自动播放');
+        console.log('  - 混合媒体画廊（图片+视频）'); 
+        console.log('  - 智能视频控制');
+        console.log('  - 响应式视频设计');
+        console.log('  - 专业级视觉效果');
+    </script>
+</body>
+</html> 

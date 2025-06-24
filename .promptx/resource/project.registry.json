@@ -1,0 +1,129 @@
+{
+  "version": "2.0.0",
+  "source": "project",
+  "metadata": {
+    "version": "2.0.0",
+    "description": "project 级资源注册表",
+    "createdAt": "2025-06-23T15:07:50.366Z",
+    "updatedAt": "2025-06-23T15:07:50.370Z",
+    "resourceCount": 8
+  },
+  "resources": [
+    {
+      "id": "ui-ppt-designer",
+      "source": "project",
+      "protocol": "role",
+      "name": "Ui Ppt Designer 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/ui-ppt-designer.role.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.368Z",
+        "updatedAt": "2025-06-23T15:07:50.368Z",
+        "scannedAt": "2025-06-23T15:07:50.368Z"
+      }
+    },
+    {
+      "id": "user-experience-mindset",
+      "source": "project",
+      "protocol": "thought",
+      "name": "User Experience Mindset 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/thought/user-experience-mindset.thought.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.368Z",
+        "updatedAt": "2025-06-23T15:07:50.368Z",
+        "scannedAt": "2025-06-23T15:07:50.368Z"
+      }
+    },
+    {
+      "id": "visual-design-thinking",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Visual Design Thinking 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/thought/visual-design-thinking.thought.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.368Z",
+        "updatedAt": "2025-06-23T15:07:50.368Z",
+        "scannedAt": "2025-06-23T15:07:50.368Z"
+      }
+    },
+    {
+      "id": "design-workflow",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Design Workflow 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/execution/design-workflow.execution.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.369Z",
+        "updatedAt": "2025-06-23T15:07:50.369Z",
+        "scannedAt": "2025-06-23T15:07:50.369Z"
+      }
+    },
+    {
+      "id": "presentation-creation",
+      "source": "project",
+      "protocol": "execution",
+      "name": "Presentation Creation 执行模式",
+      "description": "执行模式，定义具体的行为模式",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/execution/presentation-creation.execution.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.369Z",
+        "updatedAt": "2025-06-23T15:07:50.369Z",
+        "scannedAt": "2025-06-23T15:07:50.369Z"
+      }
+    },
+    {
+      "id": "presentation-mastery",
+      "source": "project",
+      "protocol": "knowledge",
+      "name": "Presentation Mastery 知识库",
+      "description": "知识库，提供专业知识和信息",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/knowledge/presentation-mastery.knowledge.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.370Z",
+        "updatedAt": "2025-06-23T15:07:50.370Z",
+        "scannedAt": "2025-06-23T15:07:50.369Z"
+      }
+    },
+    {
+      "id": "ui-design-expertise",
+      "source": "project",
+      "protocol": "knowledge",
+      "name": "Ui Design Expertise 知识库",
+      "description": "知识库，提供专业知识和信息",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/knowledge/ui-design-expertise.knowledge.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.370Z",
+        "updatedAt": "2025-06-23T15:07:50.370Z",
+        "scannedAt": "2025-06-23T15:07:50.370Z"
+      }
+    },
+    {
+      "id": "visual-communication",
+      "source": "project",
+      "protocol": "knowledge",
+      "name": "Visual Communication 知识库",
+      "description": "知识库，提供专业知识和信息",
+      "reference": "@project://.promptx/resource/domain/ui-ppt-designer/knowledge/visual-communication.knowledge.md",
+      "metadata": {
+        "createdAt": "2025-06-23T15:07:50.370Z",
+        "updatedAt": "2025-06-23T15:07:50.370Z",
+        "scannedAt": "2025-06-23T15:07:50.370Z"
+      }
+    }
+  ],
+  "stats": {
+    "totalResources": 8,
+    "byProtocol": {
+      "role": 1,
+      "thought": 2,
+      "execution": 2,
+      "knowledge": 3
+    },
+    "bySource": {
+      "project": 8
+    }
+  }
+}

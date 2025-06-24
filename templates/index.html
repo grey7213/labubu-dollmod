@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="娃改坊专业提供LABUBU轻量化改装配件，包括无损挂扣、情绪眼镜、态度链条等，让你的拉布布从静态展示变为时尚社交配饰">
+    <meta name="keywords" content="LABUBU改装,拉布布配件,潮玩改装,无损挂扣,情绪眼镜,娃改坊,潮玩配饰">
+    <meta name="author" content="POP MART Analytics">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="泡泡玛特 Labubu 全球数据洞察平台">
+    <meta property="og:description" content="深度解析泡泡玛特拉布布现象，探索3100亿市值背后的商业密码">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename=hero_image) }}">
+    
+    <title>娃改坊 | LABUBU潮玩改装配件专家 - 让你的拉布布成为社交利器</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "泡泡玛特 POP MART",
+      "url": "https://www.popmart.com",
+      "logo": "{{ url_for('static', filename=hero_image) }}",
+      "description": "全球领先的潮流文化娱乐公司",
+      "foundingDate": "2010",
+      "founders": [
+        {
+          "@type": "Person",
+          "name": "王宁"
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header role="banner">
+        <h1>🎨 娃改坊 DollModShop</h1>
+        <p style="margin-top: 16px; font-size: 1.1rem; opacity: 0.9; font-weight: 300;">
+            让你的LABUBU成为5000元的社交资本 ✨
+        </p>
+    </header>
+
+    <!-- 苹果风格视差滚动 Hero Section -->
+    <section class="parallax-hero" id="parallax-hero">
+        <!-- 动态视频背景层 -->
+        <div class="video-background-layer">
+            {% if hero_content and hero_content.type == 'video' %}
+                <video id="hero-video" 
+                       autoplay 
+                       muted 
+                       loop 
+                       playsinline
+                       preload="metadata"
+                       style="opacity: 1 !important; visibility: visible !important; display: block !important;">
+                    <source src="{{ url_for('static', filename=hero_content.src) }}" type="video/mp4">
+                </video>
+            {% endif %}
+        </div>
+        
+        <!-- 渐进式图片层（滚动时显示） -->
+        <div class="image-transition-layers">
+            {% if gallery_items %}
+                {% for item in gallery_items[:6] %}
+                    {% if item.type == 'image' %}
+                        <div class="image-layer" data-scroll-reveal="{{ loop.index }}">
+                            <img src="{{ url_for('static', filename=item.src) }}" 
+                                 alt="{{ item.alt }}" 
+                                 loading="eager">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <!-- 主要文字内容 -->
+        <div class="hero-content">
+            <div class="hero-text-container">
+                <h1 class="hero-title" data-scroll-fade>
+                    <span class="title-line">Discover the World of</span>
+                    <span class="title-main">Labubu Magic ✨</span>
+                </h1>
+                
+                <div class="hero-stats" data-scroll-fade>
+                    {% if media_stats %}
+                        <div class="stat-item">
+                            <span class="stat-number">{{ media_stats.total_images }}</span>
+                            <span class="stat-label">张精美图片</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">{{ media_stats.total_videos }}</span>
+                            <span class="stat-label">个动态视频</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">{{ media_stats.gallery_items }}</span>
+                            <span class="stat-label">个展示项目</span>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="scroll-indicator" data-scroll-fade>
+                    <span class="scroll-text">向下滑动探索更多</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 视频控制按钮 -->
+        <div class="video-controls" data-scroll-fade>
+            <button class="video-control-btn" onclick="toggleParallaxVideo()" aria-label="播放/暂停视频">
+                <span id="parallax-video-icon">⏸️</span>
+            </button>
+        </div>
+        
+        <!-- 进度指示器 -->
+        <div class="scroll-progress">
+            <div class="progress-bar" id="hero-progress"></div>
+        </div>
+    </section>
+
+    <!-- 图片填充过渡区域 -->
+    <section class="image-showcase-transition" id="image-showcase">
+        <div class="showcase-container">
+            {% if gallery_items %}
+                <div class="showcase-grid">
+                    {% for item in gallery_items %}
+                        {% if item.type == 'image' %}
+                            <div class="showcase-item" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                                <div class="showcase-image-container">
+                                    <img src="{{ url_for('static', filename=item.src) }}" 
+                                         alt="{{ item.alt }}" 
+                                         loading="lazy"
+                                         class="showcase-image">
+                                    <div class="showcase-overlay">
+                                        <span class="showcase-title">LABUBU Collection</span>
+                                        <span class="showcase-subtitle">{{ item.filename[:15] }}...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="gallery-container" role="main">
+        <h2 id="market-overview">📊 市场概览 Market Overview</h2>
+        
+        <div class="stats-grid" role="region" aria-labelledby="market-overview">
+            <div class="stat-card">
+                <span class="stat-number" data-target="3100">0</span>
+                <div class="stat-label">市值 (亿港元)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="440">0</span>
+                <div class="stat-label">海外增长率 (%)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="75">0</span>
+                <div class="stat-label">女性用户占比 (%)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="30">0</span>
+                <div class="stat-label">拉布布销售额 (亿元)</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="100">0</span>
+                <div class="stat-label">海外门店数量</div>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" data-target="700">0</span>
+                <div class="stat-label">拉布布增长倍数 (%)</div>
+            </div>
+        </div>
+
+        <!-- Product Gallery -->
+        <h2 id="product-gallery">🎨 Labubu 产品宇宙</h2>
+        
+        <div class="gallery" role="region" aria-labelledby="product-gallery">
+            {% for item in gallery_items %}
+            <div class="gallery-item" data-type="{{ item.type }}">
+                {% if item.type == 'video' %}
+                    <div class="video-container">
+                        <video class="gallery-video" 
+                               muted 
+                               loop
+                               playsinline
+                               preload="metadata"
+                               style="opacity: 1 !important; visibility: visible !important;"
+                               {% if item.poster %}poster="{{ url_for('static', filename=item.poster) }}"{% endif %}
+                               onloadeddata="console.log('画廊视频加载成功:', this.src); this.style.opacity='1';"
+                               onerror="console.error('画廊视频加载失败:', this.src); this.style.display='none';"
+                               onclick="toggleGalleryVideo(this)">
+                            <source src="{{ url_for('static', filename=item.src) }}" type="video/mp4">
+                        </video>
+                        <div class="video-overlay-small">
+                            <span class="video-type-indicator">🎬</span>
+                            <span class="video-play-icon">▶️</span>
+                        </div>
+                        <div class="media-caption">{{ item.filename[:20] }}{% if item.filename|length > 20 %}...{% endif %}</div>
+                    </div>
+                {% else %}
+                    <div class="image-container">
+                        <img src="{{ url_for('static', filename=item.src) }}" 
+                             alt="{{ item.alt }}" 
+                             loading="lazy"
+                             style="opacity: 1 !important; visibility: visible !important;"
+                             onload="console.log('画廊图片加载成功:', this.src); this.style.opacity='1';"
+                             onerror="console.error('画廊图片加载失败:', this.src); this.onerror=null; this.src='https://images.unsplash.com/photo-1558618066-fcd25c85cd64?auto=format&fit=crop&w=400&q=80'; this.alt='Labubu - 默认图片'; this.style.opacity='1';">
+                        <div class="image-overlay-small">
+                            <span class="image-type-indicator">🖼️</span>
+                        </div>
+                        <div class="media-caption">{{ item.filename[:20] }}{% if item.filename|length > 20 %}...{% endif %}</div>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- 娃改坊产品展示区域 -->
+        <div style="margin-top: 48px;">
+            <h2 style="color: var(--primary); margin-bottom: 24px; font-size: 1.8rem; text-align: center;">🎯 娃改坊出街系列 Street-Ready Series</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 32px; font-size: 1.1rem;">将你的500元LABUBU升级为5000元社交资本</p>
+            
+            <!-- 产品卡片展示 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 32px 0;">
+                <div style="background: rgba(255, 255, 255, 0.95); border-radius: 16px; padding: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06); border: 2px solid var(--primary); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -10px; right: -10px; background: linear-gradient(45deg, #FF6B9D, #FFC371); color: white; padding: 8px 16px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; transform: rotate(12deg);">HOT🔥</div>
+                    <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.1rem;">💎 无损挂扣 The Clasp</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; font-size: 0.9rem;">钛合金材质，无需打孔，让LABUBU完美变身包包挂饰、车钥匙扣</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">成本: ¥8</span>
+                        <span style="font-size: 1.2rem; font-weight: 600; color: var(--primary);">售价: ¥68</span>
+                    </div>
+                    <div style="margin-top: 12px; text-align: center; background: linear-gradient(135deg, #FFE4F1, #E8F4FD); padding: 8px; border-radius: 8px;">
+                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600;">利润率: 750%</span>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.95); border-radius: 16px; padding: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);">
+                    <h3 style="color: var(--secondary); margin-bottom: 16px; font-size: 1.1rem;">😎 情绪眼镜 Mood Goggles</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; font-size: 0.9rem;">多色亚克力迷你墨镜，根据心情为LABUBU搭配不同"情绪"</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">成本: ¥2</span>
+                        <span style="font-size: 1.2rem; font-weight: 600; color: var(--secondary);">售价: ¥28</span>
+                    </div>
+                    <div style="margin-top: 12px; text-align: center; background: linear-gradient(135deg, #E8F4FD, #FFE4F1); padding: 8px; border-radius: 8px;">
+                        <span style="font-size: 0.8rem; color: var(--secondary); font-weight: 600;">利润率: 1300%</span>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.95); border-radius: 16px; padding: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);">
+                    <h3 style="color: var(--accent); margin-bottom: 16px; font-size: 1.1rem;">⛓️ 态度链条 Attitude Chains</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; font-size: 0.9rem;">微缩版金属链、珍珠链，瞬间提升LABUBU的"潮酷"指数</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">成本: ¥5</span>
+                        <span style="font-size: 1.2rem; font-weight: 600; color: var(--accent);">售价: ¥48</span>
+                    </div>
+                    <div style="margin-top: 12px; text-align: center; background: linear-gradient(135deg, #FFE4A3, #FFE4F1); padding: 8px; border-radius: 8px;">
+                        <span style="font-size: 0.8rem; color: #E91E63; font-weight: 600;">利润率: 860%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商业模式展示 -->
+            <div style="margin-top: 32px; padding: 24px; background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(74, 144, 226, 0.1)); border-radius: 16px; text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 16px;">💡 轻资产创业模式</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div style="padding: 12px; background: rgba(255, 255, 255, 0.8); border-radius: 8px;">
+                        <strong style="color: var(--primary);">启动资金</strong><br>
+                        <span style="font-size: 1.2rem; color: var(--text-primary);">≤ 1万元</span>
+                    </div>
+                    <div style="padding: 12px; background: rgba(255, 255, 255, 0.8); border-radius: 8px;">
+                        <strong style="color: var(--secondary);">回本周期</strong><br>
+                        <span style="font-size: 1.2rem; color: var(--text-primary);">200件销量</span>
+                    </div>
+                    <div style="padding: 12px; background: rgba(255, 255, 255, 0.8); border-radius: 8px;">
+                        <strong style="color: var(--accent);">平均利润率</strong><br>
+                        <span style="font-size: 1.2rem; color: var(--text-primary);">500%+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Expansion Insight -->
+        <div style="margin-top: 48px; padding: 32px; background: rgba(255, 107, 157, 0.05); border-radius: 16px; border-left: 4px solid var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.3rem;">🌍 市场机会洞察</h3>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px;">
+                <strong>LABUBU热潮：</strong>2024年销售额暴增1289%至28.3亿元，成为泡泡玛特第二大产品线，全球销量突破1亿只。
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 12px;">
+                <strong>改装商机：</strong>义乌改娃师月入6-7千，改造一只LABUBU收费300元，订单排至数月后，市场供不应求。
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8;">
+                <strong>Z世代需求：</strong>75%女性用户，追求个性化表达，愿意为"社交货币"买单，改装配件成本低利润高。
+            </p>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="container" role="region" aria-label="数据可视化图表">
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                📈 全球销售趋势分析
+            </h3>
+            {{ sales_trend|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                🌐 销售渠道分布
+            </h3>
+            {{ channel_distribution|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                💰 产品价格走势
+            </h3>
+            {{ price_bar|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                🔥 社媒热度词云
+            </h3>
+            {{ wordcloud|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                👥 用户画像分析
+            </h3>
+            {{ user_profile|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                📊 用户转化漏斗
+            </h3>
+            {{ revenue_funnel|safe }}
+        </article>
+        
+        <article class="chart">
+            <h3 style="margin-bottom: 24px; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                🏆 竞品对比分析
+            </h3>
+            {{ competitor_analysis|safe }}
+        </article>
+    </section>
+
+    <!-- 商业计划书入口 -->
+    <section class="container" style="margin: 60px auto; text-align: center;">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 40px; border-radius: 20px; box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);">
+            <h3 style="color: white; margin-bottom: 16px; font-size: 1.8rem;">🚀 创业机会来了！</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 24px; opacity: 0.9;">
+                基于以上数据洞察，我们制定了完整的娃改坊创业计划书
+            </p>
+            <p style="margin-bottom: 32px; font-size: 1rem; opacity: 0.8;">
+                抓住LABUBU热潮 | 轻资产创业模式 | 高利润回报 | 快速回本
+            </p>
+            <a href="{{ url_for('business_plan') }}" 
+               style="display: inline-block; background: rgba(255,255,255,0.9); color: #667eea; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.1);"
+               onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'">
+                📋 查看完整商业计划书
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div style="position: relative; z-index: 1;">
+            <p style="font-size: 1.1rem; margin-bottom: 12px; font-weight: 500;">
+                🎯 数据来源于公开市场信息及官方披露
+            </p>
+            <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 16px;">
+                娃改坊 DollModShop | 让你的LABUBU成为社交资本
+            </p>
+            <p style="opacity: 0.6; font-size: 0.8rem;">
+                © 2024 娃改坊数据洞察平台 | Made with ❤️ for Entrepreneurs
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 数字滚动动画
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = +counter.getAttribute('data-target');
+                        const duration = 2000;
+                        const start = performance.now();
+                        
+                        function updateCounter(currentTime) {
+                            const elapsed = currentTime - start;
+                            const progress = Math.min(elapsed / duration, 1);
+                            
+                            // 使用缓动函数
+                            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                            const current = Math.floor(target * easeOutQuart);
+                            
+                            counter.textContent = current.toLocaleString();
+                            
+                            if (progress < 1) {
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        }
+                        
+                        requestAnimationFrame(updateCounter);
+                        observer.unobserve(counter);
+                    }
+                });
+            }, observerOptions);
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+        
+        // 页面加载完成后执行动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 延迟执行数字动画
+            setTimeout(animateCounters, 500);
+            
+            // 添加页面加载动画
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(20px)';
+            
+            requestAnimationFrame(() => {
+                document.body.style.transition = 'all 0.6s ease-out';
+                document.body.style.opacity = '1';
+                document.body.style.transform = 'translateY(0)';
+            });
+            
+            // 优化图片加载 - 修复透明度问题
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.style.transition = 'opacity 0.3s ease-in-out';
+                        
+                        // 检查图片是否已经加载完成
+                        if (img.complete && img.naturalWidth > 0) {
+                            // 图片已加载，直接显示
+                            img.style.opacity = '1';
+                            console.log('✅ 懒加载图片已完成:', img.src);
+                        } else {
+                            // 图片未加载，设置透明度并监听加载完成
+                            img.style.opacity = '0';
+                            img.onload = () => {
+                                img.style.opacity = '1';
+                                console.log('✅ 懒加载图片加载完成:', img.src);
+                            };
+                            img.onerror = () => {
+                                img.style.opacity = '1'; // 即使错误也要显示，让错误处理接管
+                                console.error('❌ 懒加载图片加载失败:', img.src);
+                            };
+                        }
+                        
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        });
+        
+        // 性能监控
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log(`🚀 页面加载时间: ${loadTime}ms`);
+            });
+        }
+    </script>
+    
+    <!-- 视频和图片控制脚本 -->
+    <script>
+        // 苹果风格视差滚动控制
+        function toggleParallaxVideo() {
+            const video = document.getElementById('hero-video');
+            const icon = document.getElementById('parallax-video-icon');
+            
+            if (video) {
+                if (video.paused) {
+                    video.play();
+                    icon.textContent = '⏸️';
+                    console.log('▶️ 视差视频播放');
+                } else {
+                    video.pause();
+                    icon.textContent = '▶️';
+                    console.log('⏸️ 视差视频暂停');
+                }
+            }
+        }
+        
+        // 视差滚动效果
+        function initParallaxScrolling() {
+            const parallaxHero = document.getElementById('parallax-hero');
+            const videoLayer = parallaxHero?.querySelector('.video-background-layer');
+            const imageLayer = parallaxHero?.querySelectorAll('.image-layer');
+            const heroContent = parallaxHero?.querySelector('.hero-content');
+            const progressBar = document.getElementById('hero-progress');
+            
+            if (!parallaxHero) return;
+            
+            let currentImageIndex = 0;
+            const maxImages = imageLayer.length;
+            
+            function updateParallax() {
+                const scrollY = window.pageYOffset;
+                const heroHeight = parallaxHero.offsetHeight;
+                const scrollProgress = Math.min(scrollY / heroHeight, 1);
+                
+                // 更新进度条
+                if (progressBar) {
+                    progressBar.style.width = `${scrollProgress * 100}%`;
+                }
+                
+                // 视频层渐隐效果
+                if (videoLayer) {
+                    const videoOpacity = Math.max(0, 1 - scrollProgress * 2);
+                    const videoScale = 1 + scrollProgress * 0.1;
+                    videoLayer.style.opacity = videoOpacity;
+                    videoLayer.style.transform = `scale(${videoScale})`;
+                }
+                
+                // 文字内容视差
+                if (heroContent) {
+                    const textY = scrollProgress * 50;
+                    const textOpacity = Math.max(0, 1 - scrollProgress * 1.5);
+                    heroContent.style.transform = `translateY(${textY}px)`;
+                    heroContent.style.opacity = textOpacity;
+                }
+                
+                // 图片层渐进显示
+                if (maxImages > 0) {
+                    const imageProgress = scrollProgress * maxImages;
+                    const newIndex = Math.floor(imageProgress);
+                    
+                    if (newIndex !== currentImageIndex && newIndex < maxImages) {
+                        // 隐藏之前的图片
+                        if (currentImageIndex < maxImages) {
+                            imageLayer[currentImageIndex].classList.remove('active');
+                        }
+                        
+                        // 显示新图片
+                        imageLayer[newIndex].classList.add('active');
+                        currentImageIndex = newIndex;
+                        
+                        console.log(`🖼️ 显示图片层 ${newIndex + 1}`);
+                    }
+                    
+                    // 微调当前图片的透明度
+                    if (currentImageIndex < maxImages) {
+                        const layerProgress = imageProgress - currentImageIndex;
+                        const opacity = Math.min(1, layerProgress * 2);
+                        imageLayer[currentImageIndex].style.opacity = opacity;
+                    }
+                }
+                
+                // 当滚动超过Hero区域时，固定最后的状态
+                if (scrollProgress >= 1) {
+                    if (videoLayer) {
+                        videoLayer.style.opacity = '0';
+                    }
+                    if (maxImages > 0 && currentImageIndex < maxImages - 1) {
+                        imageLayer.forEach(layer => layer.classList.remove('active'));
+                        imageLayer[maxImages - 1].classList.add('active');
+                        imageLayer[maxImages - 1].style.opacity = '1';
+                        currentImageIndex = maxImages - 1;
+                    }
+                }
+            }
+            
+            // 节流的滚动事件处理
+            let ticking = false;
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                    setTimeout(() => { ticking = false; }, 16);
+                }
+            }
+            
+            window.addEventListener('scroll', requestTick);
+            
+            // 初始化
+            updateParallax();
+            
+            console.log('🎬 苹果风格视差滚动已初始化');
+        }
+        
+        // AOS (Animate On Scroll) 简化实现
+        function initAOS() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('aos-animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // 观察所有带有 data-aos 属性的元素
+            document.querySelectorAll('[data-aos]').forEach(el => {
+                observer.observe(el);
+            });
+            
+            console.log('✨ AOS 动画已初始化');
+        }
+        
+        // 兼容旧的Hero视频控制
+        function toggleHeroVideo() {
+            toggleParallaxVideo();
+        }
+        
+        // 画廊视频控制
+        function toggleGalleryVideo(videoElement) {
+            const playIcon = videoElement.parentElement.querySelector('.video-play-icon');
+            
+            if (videoElement.paused) {
+                // 暂停其他所有画廊视频
+                document.querySelectorAll('.gallery-video').forEach(v => {
+                    if (v !== videoElement && !v.paused) {
+                        v.pause();
+                        const otherIcon = v.parentElement.querySelector('.video-play-icon');
+                        if (otherIcon) otherIcon.textContent = '▶️';
+                    }
+                });
+                
+                videoElement.play();
+                if (playIcon) playIcon.textContent = '⏸️';
+                console.log('▶️ 画廊视频播放:', videoElement.src);
+            } else {
+                videoElement.pause();
+                if (playIcon) playIcon.textContent = '▶️';
+                console.log('⏸️ 画廊视频暂停:', videoElement.src);
+            }
+        }
+        
+        // 视频懒加载
+        function initVideoLazyLoading() {
+            const videos = document.querySelectorAll('video[data-src]');
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const video = entry.target;
+                        const source = video.querySelector('source');
+                        if (source) {
+                            source.src = video.dataset.src;
+                            video.load();
+                            console.log('🎬 懒加载视频:', video.dataset.src);
+                        }
+                        videoObserver.unobserve(video);
+                    }
+                });
+            });
+            
+            videos.forEach(video => videoObserver.observe(video));
+        }
+        
+        // 强制确保媒体可见
+        function forceMediaVisible() {
+            const allImages = document.querySelectorAll('img');
+            const allVideos = document.querySelectorAll('video');
+            
+            allImages.forEach((img, index) => {
+                // 强制设置图片可见性
+                img.style.opacity = '1';
+                img.style.visibility = 'visible';
+                img.style.display = 'block';
+                
+                // 移除可能导致隐藏的类
+                img.classList.remove('hidden', 'invisible');
+                
+                console.log(`🔧 强制显示图片 ${index + 1}:`, img.src);
+            });
+            
+            allVideos.forEach((video, index) => {
+                // 强制设置视频可见性
+                video.style.opacity = '1';
+                video.style.visibility = 'visible';
+                video.style.display = 'block';
+                
+                console.log(`🔧 强制显示视频 ${index + 1}:`, video.src || video.querySelector('source')?.src);
+            });
+        }
+        
+        // 兼容性别名
+        function forceImagesVisible() {
+            forceMediaVisible();
+        }
+        
+        // 媒体加载状态监控和新功能初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎨 开始检查媒体文件加载状态...');
+            
+            // 立即强制显示所有媒体文件
+            forceMediaVisible();
+            
+            // 初始化视频懒加载
+            initVideoLazyLoading();
+            
+            // 初始化苹果风格视差滚动
+            initParallaxScrolling();
+            
+            // 初始化AOS动画
+            initAOS();
+            
+            // 添加平滑滚动
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // 检查Hero图片
+            const heroImg = document.getElementById('hero-image');
+            if (heroImg) {
+                console.log('🖼️ Hero图片元素找到:', heroImg.src);
+                heroImg.style.opacity = '1';
+                heroImg.style.visibility = 'visible';
+                heroImg.style.display = 'block';
+                
+                if (heroImg.complete) {
+                    console.log('✅ Hero图片已加载完成');
+                } else {
+                    console.log('⏳ Hero图片正在加载中...');
+                }
+            } else {
+                console.log('❌ Hero图片元素未找到');
+            }
+            
+            // 检查画廊图片
+            const galleryImages = document.querySelectorAll('.gallery-item img');
+            console.log(`🎨 找到 ${galleryImages.length} 张画廊图片`);
+            
+            galleryImages.forEach((img, index) => {
+                // 强制显示每张图片
+                img.style.opacity = '1';
+                img.style.visibility = 'visible';
+                img.style.display = 'block';
+                
+                console.log(`📷 画廊图片 ${index + 1}: ${img.src}`);
+                if (img.complete) {
+                    console.log(`✅ 画廊图片 ${index + 1} 已加载完成`);
+                } else {
+                    console.log(`⏳ 画廊图片 ${index + 1} 正在加载中...`);
+                }
+            });
+            
+            // 检查静态文件路径
+            console.log('🔍 当前页面URL:', window.location.href);
+            console.log('🔍 Base URL:', window.location.origin);
+            
+            // 定期检查图片是否被意外隐藏
+            setInterval(function() {
+                const hiddenImages = document.querySelectorAll('img[style*="opacity: 0"], img[style*="display: none"], img[style*="visibility: hidden"]');
+                if (hiddenImages.length > 0) {
+                    console.warn('⚠️ 发现被隐藏的图片，正在修复...', hiddenImages.length);
+                    forceImagesVisible();
+                }
+            }, 2000);
+        });
+        
+        // 图片错误处理
+        function handleImageError(img, type = 'gallery') {
+            console.error(`❌ ${type}图片加载失败:`, img.src);
+            
+            if (type === 'hero') {
+                // Hero图片失败处理
+                img.style.display = 'none';
+                const heroSection = img.parentElement;
+                if (heroSection) {
+                    heroSection.style.background = 'linear-gradient(135deg, #FF6B9D, #4A90E2)';
+                    heroSection.style.minHeight = '400px';
+                    heroSection.style.display = 'flex';
+                    heroSection.style.alignItems = 'center';
+                    heroSection.style.justifyContent = 'center';
+                    
+                    // 添加替代内容
+                    if (!heroSection.querySelector('.fallback-content')) {
+                        const fallbackDiv = document.createElement('div');
+                        fallbackDiv.className = 'fallback-content';
+                        fallbackDiv.innerHTML = '<span style="color: white; font-size: 1.5rem; text-align: center;">🎨 LABUBU 展示区<br><small style="opacity: 0.8;">图片加载中...</small></span>';
+                        heroSection.insertBefore(fallbackDiv, heroSection.firstChild);
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Analytics (placeholder) -->
+    <script>
+        // Google Analytics 4 或其他分析工具可以在这里添加
+        console.log('📊 泡泡玛特 Labubu 数据洞察平台已加载完成');
+        
+        // 页面性能监控
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                console.log('🎯 图片检查完成，如果有图片加载问题请查看上述日志');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
