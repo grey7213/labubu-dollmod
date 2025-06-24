@@ -116,7 +116,7 @@ def get_local_media():
             "hero_image": hero_image
         }
         
-            except Exception as e:
+    except Exception as e:
         print(f"❌ 获取本地媒体文件时出错: {e}")
         import traceback
         traceback.print_exc()
@@ -700,7 +700,7 @@ def ppt_version():
             "src": f"images/{media_data['hero_image']}",
             "filename": media_data["hero_image"]
         }
-            else:
+    else:
         hero_content = {
             "type": "image",
             "src": "images/labubu2.jpg",
