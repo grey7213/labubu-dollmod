@@ -28,7 +28,7 @@ python app.py
 ```
 
 ## 联系我们
-- 📧 商务合作: dollmodshop@163.com
-- 📱 创始人微信: DollMod2024
+- 📧 商务合作: yjy112508@163.com
+- 📱 创始人微信: TYTsycrystallization
 
-© 2024 娃改坊 DollModShop | 让每个LABUBU都独一无二 ✨
+© 2025 娃改坊 DollModShop | 让每个LABUBU都独一无二 ✨
