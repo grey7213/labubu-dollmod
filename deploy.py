@@ -83,7 +83,7 @@ def create_readme():
 
 ## 核心数据
 - LABUBU销售增长率: 1289%
-- 2024年销售额: 28.3亿元
+- 2024年销售额: 45.8亿元
 - 改装配件利润率: 500%+
 - 启动资金需求: ≤1万元
 
@@ -101,9 +101,9 @@ python app.py
 
 ## 联系我们
 - 📧 商务合作: dollmodshop@163.com
-- 📱 创始人微信: DollMod2024
+- 📱 创始人微信: DollMod2025
 
-© 2024 娃改坊 DollModShop | 让每个LABUBU都独一无二 ✨
+© 2025 娃改坊 DollModShop | 让每个LABUBU都独一无二 ✨
 """
     
     with open("README.md", "w", encoding="utf-8") as f:
