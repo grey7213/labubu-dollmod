@@ -476,7 +476,7 @@ header h1 {
   
   .showcase-grid {
     grid-template-columns: 1fr;
-  }
+}
 }
 
 /* 画廊容器 */
@@ -616,9 +616,11 @@ header h1 {
 /* iframe样式 */
 iframe {
   width: 100%;
-  height: 420px;
+  height: 520px;
+  min-height: 500px;
   border: none;
   border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 /* 页脚 */
@@ -665,6 +667,16 @@ footer::before {
   }
   
   header, .gallery-container {
+    padding: var(--spacing-lg);
+  }
+  
+  /* 移动端图表优化 */
+  iframe {
+    height: 400px;
+    min-height: 350px;
+  }
+  
+  .chart {
     padding: var(--spacing-lg);
   }
 }
