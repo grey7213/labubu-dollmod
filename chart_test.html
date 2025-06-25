@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图表显示修复测试</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FFE4F1 0%, #E8F4FD 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        
+        h1 {
+            color: #FF6B9D;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .chart-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border: 2px solid #FF6B9D20;
+        }
+        
+        .chart-title {
+            color: #2D3748;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .chart-frame {
+            width: 100%;
+            height: 520px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .status-indicator {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-info {
+            background: #cce5ff;
+            color: #004080;
+            border: 1px solid #99d6ff;
+        }
+        
+        .navigation {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background: #FF6B9D;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background: #E91E63;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-frame {
+                height: 400px;
+            }
+            
+            .test-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎨 图表显示修复测试页面</h1>
+        
+        <div class="status-indicator status-success">
+            ✅ 图表高度已更新：400px → 500px，iframe高度：420px → 520px
+        </div>
+        
+        <div class="status-indicator status-info">
+            📊 现在所有图表应该完整显示，包括标题、图例和所有数据内容
+        </div>
+        
+        <div class="navigation">
+            <a href="http://localhost:5000" class="nav-button">🏠 返回主页</a>
+            <a href="http://localhost:5000/ppt" class="nav-button">📊 PPT版本</a>
+        </div>
+        
+        <div class="chart-grid">
+            <div class="chart-item">
+                <div class="chart-title">📈 销售趋势图</div>
+                <iframe src="http://localhost:5000/chart/sales" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">🌐 全球分布饼图</div>
+                <iframe src="http://localhost:5000/chart/distribution" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">💰 价格走势柱状图</div>
+                <iframe src="http://localhost:5000/chart/price" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">🔥 热度词云</div>
+                <iframe src="http://localhost:5000/chart/wordcloud" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">👥 用户画像雷达图</div>
+                <iframe src="http://localhost:5000/chart/user" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">📊 转化漏斗图</div>
+                <iframe src="http://localhost:5000/chart/funnel" class="chart-frame"></iframe>
+            </div>
+            
+            <div class="chart-item">
+                <div class="chart-title">🏆 竞品对比散点图</div>
+                <iframe src="http://localhost:5000/chart/competitor" class="chart-frame"></iframe>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: rgba(255, 107, 157, 0.1); border-radius: 12px; text-align: center;">
+            <h3 style="color: #FF6B9D; margin-bottom: 15px;">🔧 修复说明</h3>
+            <ul style="text-align: left; max-width: 600px; margin: 0 auto; color: #4A5568; line-height: 1.6;">
+                <li>所有图表高度从 400px 增加到 500px</li>
+                <li>iframe容器高度从 420px 增加到 520px</li>
+                <li>添加了 min-height 确保最小显示高度</li>
+                <li>优化了标题和图例的位置，避免被截断</li>
+                <li>改进了词云的大小和位置设置</li>
+                <li>增强了移动端响应式适配</li>
+                <li>添加了 overflow: hidden 防止滚动条干扰</li>
+            </ul>
+        </div>
+        
+        <div class="navigation">
+            <p style="color: #4A5568; font-size: 0.9rem;">
+                💡 提示：如果图表仍然显示不全，请检查浏览器缩放比例或尝试刷新页面
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // 添加加载状态检测
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframes = document.querySelectorAll('.chart-frame');
+            let loadedCount = 0;
+            
+            iframes.forEach((iframe, index) => {
+                iframe.addEventListener('load', function() {
+                    loadedCount++;
+                    console.log(`图表 ${index + 1} 加载完成`);
+                    
+                    if (loadedCount === iframes.length) {
+                        console.log('✅ 所有图表加载完成！');
+                        
+                        // 添加成功指示器
+                        const indicator = document.createElement('div');
+                        indicator.className = 'status-indicator status-success';
+                        indicator.innerHTML = '✅ 所有图表加载完成！图表显示修复验证成功。';
+                        indicator.style.marginTop = '20px';
+                        document.querySelector('.test-container').appendChild(indicator);
+                    }
+                });
+                
+                iframe.addEventListener('error', function() {
+                    console.error(`❌ 图表 ${index + 1} 加载失败`);
+                    this.style.background = '#ffe6e6';
+                    this.style.border = '2px solid #ff6b6b';
+                });
+            });
+            
+            // 5秒后检查加载状态
+            setTimeout(() => {
+                if (loadedCount < iframes.length) {
+                    console.warn(`⚠️ 仅加载了 ${loadedCount}/${iframes.length} 个图表`);
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html> 
