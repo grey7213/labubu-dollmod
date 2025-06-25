@@ -836,7 +836,7 @@ def api_stats():
 def tencent_verification():
     """腾讯站长验证文件"""
     from flask import Response
-    return Response("73375264871926407", mimetype='text/plain')
+    return Response("5288096236848562549", mimetype='text/plain')
 
 @app.route("/test/fix")
 def test_fix():
