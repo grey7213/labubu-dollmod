@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, send_file
 import os
 import glob
 import requests
@@ -9,6 +9,9 @@ from pyecharts.globals import ThemeType
 import json
 from datetime import datetime, timedelta
 import numpy as np
+import qrcode
+from io import BytesIO
+import base64
 
 app = Flask(__name__)
 
@@ -122,6 +125,27 @@ def get_local_media():
         traceback.print_exc()
         return {"images": [], "videos": [], "hero_video": None, "hero_image": None}
 
+def generate_qr_code(url, size=10, border=2):
+    """生成二维码"""
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,  # 高容错率
+        box_size=size,
+        border=border,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+    
+    # 创建二维码图片
+    img = qr.make_image(fill_color="#2D3748", back_color="#FFFFFF")
+    
+    # 转换为字节流
+    img_io = BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    
+    return img_io
+
 # ----------------- 真实数据生成器 -----------------
 
 def generate_real_sales_data():
@@ -198,7 +222,7 @@ def generate_price_trend_data():
 def create_sales_trend_chart(data):
     """创建销售趋势图表"""
     line = (
-        Line(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Line(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add_xaxis(data["month"].tolist())
         .add_yaxis(
             "销售量 (万个)", 
@@ -238,7 +262,8 @@ def create_sales_trend_chart(data):
                 title="📈 全球销售趋势与拉布布贡献度",
                 subtitle="数据来源：泡泡玛特官方财报",
                 pos_left="center",
-                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold")
+                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold"),
+                pos_top="5%"
             ),
             tooltip_opts=opts.TooltipOpts(
                 trigger="axis",
@@ -259,7 +284,7 @@ def create_sales_trend_chart(data):
                 axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(color="#E2E8F0")),
                 splitline_opts=opts.SplitLineOpts(is_show=True, linestyle_opts=opts.LineStyleOpts(opacity=0.3))
             ),
-            legend_opts=opts.LegendOpts(pos_top="10%", pos_left="center"),
+            legend_opts=opts.LegendOpts(pos_top="15%", pos_left="center"),
             datazoom_opts=[
                 opts.DataZoomOpts(range_start=0, range_end=100, type_="slider"),
                 opts.DataZoomOpts(range_start=0, range_end=100, type_="inside")
@@ -271,7 +296,7 @@ def create_sales_trend_chart(data):
 def create_global_distribution_chart(data):
     """创建全球销售分布图表"""
     pie = (
-        Pie(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Pie(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add(
             "销售分布",
             [list(z) for z in zip(data["region"], data["sales"])],
@@ -285,12 +310,13 @@ def create_global_distribution_chart(data):
                 title="🌐 全球市场销售分布",
                 subtitle="基于2025年最新数据",
                 pos_left="center",
-                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold")
+                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold"),
+                pos_top="5%"
             ),
             legend_opts=opts.LegendOpts(
                 type_="scroll",
                 pos_left="0%",
-                pos_top="15%",
+                pos_top="20%",
                 orient="vertical",
                 textstyle_opts=opts.TextStyleOpts(color="#4A5568")
             ),
@@ -318,7 +344,7 @@ def create_global_distribution_chart(data):
 def create_price_analysis_chart(data):
     """创建价格分析图表"""
     bar = (
-        Bar(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Bar(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add_xaxis(data["quarter"].tolist())
         .add_yaxis(
             "平均售价",
@@ -395,14 +421,14 @@ def create_trending_wordcloud():
     ]
     
     wc = (
-        WordCloud(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        WordCloud(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add(
             "",
             trending_words,
-            word_size_range=[20, 100],
+            word_size_range=[20, 80],
             shape="circle",
-            width="100%",
-            height="400px",
+            width="90%",
+            height="80%",
             pos_left="center",
             pos_top="center"
         )
@@ -411,7 +437,8 @@ def create_trending_wordcloud():
                 title="🔥 社媒热度词云分析",
                 subtitle="基于微博、小红书、抖音等平台数据",
                 pos_left="center",
-                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold")
+                title_textstyle_opts=opts.TextStyleOpts(color="#2D3748", font_size=16, font_weight="bold"),
+                pos_top="5%"
             ),
             tooltip_opts=opts.TooltipOpts(
                 formatter="关键词: {b}<br/>热度: {c}",
@@ -428,7 +455,7 @@ def create_user_profile_chart():
     values = [75, 68, 72, 85, 63, 78]  # 百分比数据
     
     radar = (
-        Radar(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Radar(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add_schema(
             schema=[
                 opts.RadarIndicatorItem(name=cat, max_=100) for cat in categories
@@ -472,7 +499,7 @@ def create_revenue_funnel():
     ]
     
     funnel = (
-        Funnel(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Funnel(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add(
             "用户转化",
             funnel_data,
@@ -514,7 +541,7 @@ def create_competitor_analysis():
     ]
     
     scatter = (
-        Scatter(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="400px"))
+        Scatter(init_opts=opts.InitOpts(theme=ThemeType.ROMANTIC, width="100%", height="500px"))
         .add_xaxis([item[1] for item in scatter_data])  # 市值
         .add_yaxis(
             "品牌力",
@@ -757,15 +784,28 @@ def single_chart(chart_name):
                 padding: 20px; 
                 background: linear-gradient(135deg, #FFE4F1 0%, #E8F4FD 100%);
                 font-family: 'Microsoft YaHei', sans-serif;
+                min-height: 100vh;
             }}
             .chart-container {{
                 width: 100%;
-                height: 500px;
+                min-height: 550px;
+                height: auto;
                 background: rgba(255, 255, 255, 0.95);
                 border-radius: 16px;
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-                padding: 20px;
+                padding: 30px;
                 box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }}
+            /* 确保图表iframe完全可见 */
+            .chart-container iframe {{
+                width: 100% !important;
+                height: 500px !important;
+                min-height: 500px !important;
+                border: none !important;
+                border-radius: 8px;
+                overflow: visible !important;
             }}
         </style>
     </head>
@@ -791,6 +831,12 @@ def api_stats():
         "timestamp": datetime.now().isoformat(),
         "source": "Official POP MART Financial Reports & Market Analysis"
     }
+
+@app.route("/tencent17023576402838629888.txt")
+def tencent_verification():
+    """腾讯站长验证文件"""
+    from flask import Response
+    return Response("73375264871926407", mimetype='text/plain')
 
 @app.route("/test/fix")
 def test_fix():

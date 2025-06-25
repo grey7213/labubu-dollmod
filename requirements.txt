@@ -4,3 +4,5 @@ pyecharts==1.9.1
 requests>=2.31
 Werkzeug==2.3.7
 gunicorn==21.2.0
+qrcode[pil]==7.4.2
+numpy>=1.24
