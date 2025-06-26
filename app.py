@@ -7,22 +7,17 @@ from pyecharts.charts import Line, Pie, Bar, WordCloud, Radar, Map, Scatter, Fun
 from pyecharts import options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.commons.utils import JsCode
-from pyecharts.globals import CurrentConfig, OnlineHostType
+from pyecharts.globals import CurrentConfig
 import json
 
 # 配置PyEcharts在云环境中的CDN设置
 try:
-    # 优先使用国内CDN，备用国际CDN
-    CurrentConfig.ONLINE_HOST = OnlineHostType.JUSTMYCODE_HOST
-    print("🌐 PyEcharts: 使用JUSTMYCODE_HOST CDN")
+    # 使用稳定的jsdelivr CDN
+    CurrentConfig.ONLINE_HOST = "https://cdn.jsdelivr.net/npm/"
+    print("🌐 PyEcharts: 使用jsdelivr CDN")
 except Exception as e:
-    try:
-        # 备用方案：使用jsdelivr CDN
-        CurrentConfig.ONLINE_HOST = "https://cdn.jsdelivr.net/npm/"
-        print("🌐 PyEcharts: 使用jsdelivr CDN备用方案")
-    except Exception as e2:
-        print(f"⚠️ PyEcharts CDN配置警告: {e2}")
-        # 继续使用默认配置
+    print(f"⚠️ PyEcharts CDN配置警告: {e}")
+    # 继续使用默认配置
 from datetime import datetime, timedelta
 import numpy as np
 import qrcode
